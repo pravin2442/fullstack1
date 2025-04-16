@@ -1,0 +1,59 @@
+<!-- Image Swap with 10 Images -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Swap</title>
+  <style>
+    body {
+      text-align: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+    img {
+      width: 300px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>🖼️ Image Swap</h2>
+
+  <!-- Swappable Image -->
+  <img id="swapImage" src="https://via.placeholder.com/300x200/0000FF/FFFFFF?text=Image+1" alt="Image" />
+
+  <br>
+  <button onclick="swapImage()">Swap Image</button>
+
+  <script>
+    const images = [
+      "images (4).jfif",
+      "images.jfif",
+      "images (3).jfif",
+      "images (2).jfif",
+      "images (1).jfif",
+      "download.jfif",
+      "download (4).jfif",
+      "download (3).jfif",
+      "download (2).jfif",
+      "download (1).jfif"
+    ];
+
+    let currentIndex = 0;
+
+    function swapImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      document.getElementById("swapImage").src = images[currentIndex];
+    }
+  </script>
+</body>
+</html>

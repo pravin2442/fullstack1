@@ -1,0 +1,52 @@
+<!-- Color Swap Button with 10 Colors -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Color Swap</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      transition: background-color 0.5s ease;
+      padding: 50px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎨 Color Swap</h2>
+  <button onclick="swapColor()">Swap Color</button>
+
+  <script>
+    const colors = [
+      "#ffcccb", 
+      "#add8e6", 
+      "#90ee90", 
+      "#ffffe0", 
+      "#dda0dd", 
+      "#ffb6c1", 
+      "#f0e68c", 
+      "#e6e6fa", 
+      "#ffe4b5", 
+      "#d3d3d3"  
+    ];
+
+    let colorIndex = 0;
+
+    function swapColor() {
+      document.body.style.backgroundColor = colors[colorIndex];
+      colorIndex = (colorIndex + 1) % colors.length; 
+    }
+  </script>
+</body>
+</html>
