@@ -1,0 +1,74 @@
+import * as r from 'readline-sync';
+
+// Base class
+class Vehicle {
+    brand: string;
+    model: string;
+    rentalPrice: number;
+
+    constructor(brand: string, model: string, rentalPrice: number) {
+        this.brand = brand;
+        this.model = model;
+        this.rentalPrice = rentalPrice;
+    }
+
+    displayInfo() {
+        console.log(`🚘 Brand: ${this.brand}`);
+        console.log(`📦 Model: ${this.model}`);
+    }
+}
+
+// Car class
+class Car extends Vehicle {
+    numberOfSeats: number;
+
+    constructor(brand: string, model: string, rentalPrice: number, seats: number) {
+        super(brand, model, rentalPrice);
+        this.numberOfSeats = seats;
+    }
+
+    calculateCost(days: number) {
+        const cost = this.rentalPrice * days;
+        this.displayInfo();
+        console.log(`💺 Seats: ${this.numberOfSeats}`);
+        console.log(`📅 Days: ${days}`);
+        console.log(`💰 Total Rental Cost: ₹${cost}`);
+    }
+}
+
+// Bike class
+class Bike extends Vehicle {
+    engineCC: number;
+
+    constructor(brand: string, model: string, rentalPrice: number, engineCC: number) {
+        super(brand, model, rentalPrice);
+        this.engineCC = engineCC;
+    }
+
+    calculateCost(days: number) {
+        const cost = this.rentalPrice * days;
+        this.displayInfo();
+        console.log(`🏍️ Engine: ${this.engineCC} CC`);
+        console.log(`📅 Days: ${days}`);
+        console.log(`💰 Total Rental Cost: ₹${cost}`);
+    }
+}
+
+// Menu
+const type = r.question("Enter vehicle type (car/bike): ");
+const brand = r.question("Enter brand: ");
+const model = r.question("Enter model: ");
+const price = parseFloat(r.question("Enter rental price per day: "));
+const days = parseInt(r.question("Enter number of rental days: "));
+
+if (type === "car") {
+    const seats = parseInt(r.question("Enter number of seats: "));
+    const car = new Car(brand, model, price, seats);
+    car.calculateCost(days);
+} else if (type === "bike") {
+    const cc = parseInt(r.question("Enter engine CC: "));
+    const bike = new Bike(brand, model, price, cc);
+    bike.calculateCost(days);
+} else {
+    console.log("❌ Invalid vehicle type.");
+}
