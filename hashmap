@@ -1,0 +1,74 @@
+//Hash map
+
+// votingMenuSystem.ts
+import * as r from 'readline-sync';
+
+const candidates = ["Alice", "Bob", "Carol"];
+const votes = new Map<string, number>();
+
+console.log("🗳️ Welcome to the Voting System!");
+console.log("Available candidates:", candidates.join(", "));
+
+while (true) {
+    console.log(`
+-------- MENU --------
+1. Vote for a candidate
+2. Show all vote counts
+3. Show winner
+4. Exit
+----------------------`);
+
+    const choice = r.question("Enter your choice (1-4): ");
+
+    switch (choice) {
+        case '1':
+            const vote = r.question("Enter candidate name to vote: ");
+            if (candidates.includes(vote)) {
+                votes.set(vote, (votes.get(vote) || 0) + 1);
+                console.log(`✅ Vote recorded for ${vote}.\n`);
+            } else {
+                console.log(`❌ Invalid candidate. Try again.\n`);
+            }
+            break;
+
+        case '2':
+            console.log("\n📊 Current Vote Count:");
+            if (votes.size === 0) {
+                console.log("No votes yet.");
+            } else {
+                candidates.forEach(c => {
+                    console.log(`${c}: ${votes.get(c) || 0}`);
+                });
+            }
+            break;
+
+        case '3':
+            let maxVote = 0;
+            let winners: string[] = [];
+
+            votes.forEach((count, name) => {
+                if (count > maxVote) {
+                    maxVote = count;
+                    winners = [name];
+                } else if (count === maxVote) {
+                    winners.push(name);
+                }
+            });
+
+            if (winners.length === 0) {
+                console.log("❗ No votes yet.");
+            } else if (winners.length === 1) {
+                console.log(`🏆 Winner: ${winners[0]} with ${maxVote} votes`);
+            } else {
+                console.log(`🤝 It's a tie between: ${winners.join(", ")} with ${maxVote} votes each`);
+            }
+            break;
+
+        case '4':
+            console.log("👋 Exiting voting system.");
+            process.exit(0);
+
+        default:
+            console.log("❌ Invalid option. Please select from 1 to 4.");
+    }
+}
