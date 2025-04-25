@@ -1,0 +1,54 @@
+import * as r from 'readline-sync';
+
+// Queue to store book requests
+let queue: string[] = [];
+
+console.log("📚 University Library Book Request System");
+
+while (true) {
+    console.log(`
+--------- MENU ----------
+1. Request a Book
+2. Assign Book to Next Student
+3. View Waiting List
+4. Exit
+-------------------------
+    `);
+
+    const choice = r.question("Enter your choice (1-4): ");
+
+    switch (choice) {
+        case '1':
+            const studentName = r.question("Enter student name to request a book: ");
+            queue.push(studentName);
+            console.log(`✅ ${studentName} added to the waiting list.`);
+            break;
+
+        case '2':
+            if (queue.length === 0) {
+                console.log("⚠️ No students in the queue.");
+            } else {
+                const assigned = queue.shift();
+                console.log(`📘 Book assigned to: ${assigned}`);
+            }
+            break;
+
+        case '3':
+            if (queue.length === 0) {
+                console.log("📭 No students in the waiting list.");
+            } else {
+                console.log("📋 Waiting List:");
+                queue.forEach((name, index) => {
+                    console.log(`${index + 1}. ${name}`);
+                });
+            }
+            break;
+
+        case '4':
+            console.log("👋 Exiting Library System.");
+            process.exit(0);
+
+        default:
+            console.log("❌ Invalid choice. Try 1 to 4.");
+    }
+}
