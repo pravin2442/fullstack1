@@ -1,0 +1,92 @@
+import * as r from 'readline-sync';
+
+// Node class
+class OrderNode {
+    orderId: string;
+    next: OrderNode | null;
+
+    constructor(orderId: string) {
+        this.orderId = orderId;
+        this.next = null;
+    }
+}
+
+// Linked List class
+class OrderList {
+    head: OrderNode | null = null;
+    tail: OrderNode | null = null;
+
+    addOrder(orderId: string) {
+        const newNode = new OrderNode(orderId);
+        if (!this.head) {
+            this.head = this.tail = newNode;
+        } else {
+            this.tail!.next = newNode;
+            this.tail = newNode;
+        }
+        console.log(`✅ Order '${orderId}' added.`);
+    }
+
+    processOrder() {
+        if (!this.head) {
+            console.log("📭 No orders to process.");
+        } else {
+            console.log(`📦 Processed Order: ${this.head.orderId}`);
+            this.head = this.head.next;
+            if (!this.head) {
+                this.tail = null;
+            }
+        }
+    }
+
+    showOrders() {
+        if (!this.head) {
+            console.log("📭 No pending orders.");
+            return;
+        }
+        console.log("📝 Pending Orders:");
+        let current = this.head;
+        while (current) {
+            console.log(`- ${current.orderId}`);
+            current = current.next;
+        }
+    }
+}
+
+// Main menu
+const orders = new OrderList();
+
+while (true) {
+    console.log(`
+--------- MENU ----------
+1. Add New Order
+2. Process First Order
+3. View Pending Orders
+4. Exit
+-------------------------
+    `);
+
+    const choice = r.question("Enter your choice (1-4): ");
+
+    switch (choice) {
+        case '1':
+            const orderId = r.question("Enter Order ID: ");
+            orders.addOrder(orderId);
+            break;
+
+        case '2':
+            orders.processOrder();
+            break;
+
+        case '3':
+            orders.showOrders();
+            break;
+
+        case '4':
+            console.log("👋 Exiting E-commerce System.");
+            process.exit(0);
+
+        default:
+            console.log("❌ Invalid choice. Try 1 to 4.");
+    }
+}
