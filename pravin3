@@ -1,0 +1,67 @@
+// stack 
+
+// railwayWaitlist.ts
+import * as r from 'readline-sync';
+
+class RailwayWaitlist {
+    private stack: string[] = [];
+
+    // Add passenger to waitlist
+    addPassenger(name: string) {
+        this.stack.push(name);
+        console.log(`${name} has been added to the waitlist.`);
+    }
+
+    // Assign seat to last added passenger
+    assignSeat() {
+        if (this.stack.length === 0) {
+            console.log("No passengers in the waitlist.");
+        } else {
+            const passenger = this.stack.pop();
+            console.log(`Seat assigned to ${passenger}.`);
+        }
+    }
+
+    // Show current waitlist (LIFO view)
+    showWaitlist() {
+        if (this.stack.length === 0) {
+            console.log("Waitlist is empty.");
+        } else {
+            console.log("Current waitlist (LIFO):");
+            for (let i = this.stack.length - 1; i >= 0; i--) {
+                console.log(`${this.stack.length - i}. ${this.stack[i]}`);
+            }
+        }
+    }
+}
+
+// Main loop
+const system = new RailwayWaitlist();
+
+while (true) {
+    console.log(`\n--- Railway Waitlist System ---
+1. Add Passenger
+2. Assign Seat
+3. Show Waitlist
+4. Exit`);
+    
+    const choice = r.question("Choose an option (1-4): ");
+
+    switch (choice) {
+        case '1':
+            const name = r.question("Enter passenger name: ");
+            system.addPassenger(name);
+            break;
+        case '2':
+            system.assignSeat();
+            break;
+        case '3':
+            system.showWaitlist();
+            break;
+        case '4':
+            console.log("Exiting system. Thank you!");
+            process.exit(0);
+        default:
+            console.log("Invalid choice. Please enter a number from 1 to 4.");
+    }
+}
