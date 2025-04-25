@@ -1,0 +1,62 @@
+import * as r from 'readline-sync';
+
+// Base class
+class Employee {
+    name: string;
+    id: number;
+    salary: number = 0;
+
+    constructor(name: string, id: number) {
+        this.name = name;
+        this.id = id;
+    }
+
+    displayDetails() {
+        console.log(`🧾 Employee ID: ${this.id}`);
+        console.log(`👤 Name: ${this.name}`);
+        console.log(`💰 Salary: ₹${this.salary}`);
+    }
+}
+
+// Derived class: Full-time
+class FullTimeEmployee extends Employee {
+    fixedSalary: number;
+
+    constructor(name: string, id: number, fixedSalary: number) {
+        super(name, id);
+        this.fixedSalary = fixedSalary;
+        this.salary = fixedSalary;
+    }
+}
+
+// Derived class: Part-time
+class PartTimeEmployee extends Employee {
+    hoursWorked: number;
+    hourlyRate: number;
+
+    constructor(name: string, id: number, hoursWorked: number, hourlyRate: number) {
+        super(name, id);
+        this.hoursWorked = hoursWorked;
+        this.hourlyRate = hourlyRate;
+        this.salary = hoursWorked * hourlyRate;
+    }
+}
+
+// Menu
+const type = r.question("Enter employee type (full/part): ");
+
+const name = r.question("Enter name: ");
+const id = parseInt(r.question("Enter ID: "));
+
+if (type === "full") {
+    const salary = parseFloat(r.question("Enter fixed monthly salary: "));
+    const emp = new FullTimeEmployee(name, id, salary);
+    emp.displayDetails();
+} else if (type === "part") {
+    const hours = parseFloat(r.question("Enter hours worked: "));
+    const rate = parseFloat(r.question("Enter hourly rate: "));
+    const emp = new PartTimeEmployee(name, id, hours, rate);
+    emp.displayDetails();
+} else {
+    console.log("❌ Invalid employee type.");
+}
